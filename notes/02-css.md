@@ -38,7 +38,7 @@ flex box container
 
 put both buttons in div, give class, display:flex
 
-**Grabbing images: unplash.com is free source, copy image link
+**Grabbing images: unsplash.com is free source, copy image link
 
 img{
   object-fit: cover; (doesn't look squished)
