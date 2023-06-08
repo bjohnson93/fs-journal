@@ -122,7 +122,7 @@ pe-0 pe-md-5 would apply padding to medium and above and remove padding to small
   d-none says no longer display
   d-md-block medium devices and above are as block
 not compatible with d-flex, put d-flex in child div
-order doesn't necessarily matter, but its good practive to put default first, conditionals after
+order doesn't necessarily matter, but its good practice to put default first, conditionals after
 
 
 main is whole container (container-fluid for edge to edge)
@@ -237,7 +237,7 @@ div col12 text center text light
 p tag with text
 
 #REVIEW - 
-swap placement of divs; order-2 order-me-1 on 1st element, order-1 order-md-2 on 2nd element for 1st, order-3 for div
+swap placement of divs; order-2 order-md-1 on 1st element, order-1 order-md-2 on 2nd element for 1st, order-3 for div
 
 
 <!-- #!SECTION pet peeve -->
@@ -246,3 +246,100 @@ take style debug out for check, take off body class debug
 
 #REVIEW - 
 Breakpoint
+
+<!-- #!SECTION FIGMA Notes for 6/8/23 -->
+-Design >Frame > Select device desired
+-Colormind for color selections (#hex value)
+-Name things like navbar, can drag over to mobile version also!
+-Plugin: can bring in unsplash images directly from figma
+-text-sizing: H1 ~ 36, H2 ~ 24,, p ~16
+-change opacity with textbox over image
+-Ctrl+G to group them together
+-Effects > dropshadow 
+-COPY: alt + drag and drop 
+-Stroke is border
+-Hero Section/call to action: Image and Intro/Welcome 
+-change order via bootstrap mobile vs desktop
+
+Make Figma into a Site!
+  -style debug
+Steps:
+  section with hero
+  section with about 
+  section with for sale items
+Container Fluid class on header, main, footer
+-header: specify col for both mobile and desktop as you begin
+-main: section.row>
+section class="row hero-img"
+Css- .hero-img{background-image: url(); height: 50vh;}
+    -background-size:cover; background-position: center(or 10% 50%); background-repeat no-repeat;
+    -put text within background image: put text IN section that img is in (col 12 col md 5)
+
+    google glass box css > glassmorphism css generator
+    -custom class on div w/text, put css generated into css
+  JUSTIFY CONTENT: put in PARENT row of what you want to move
+      justify-content-end to move to right; align-items-center to shorten and center box
+  Justify content moves HORIZONTALLY/along x axis
+  Align items moves VERTICALLY /along y axis
+
+  Don't use text center on paragraphs
+
+#NOTE - column sizing before adding a bunch of css
+
+***NOTE - Image breaking bootstrap: img-fluid in class
+*skeleton out first!
+<!-- **REVIEW - root variable -->
+ <!-- #NOTE - this will set up one variable that will be accessible by other classes -->
+  <!-- good for setting up a theme! *needs to go up at top-->
+:root{
+  --snow: #F8F7F2;
+}
+
+hear{
+  background-color: var(--snow);  
+}
+  <!-- above will grab the color snow automatically -->
+
+<!-- end root -->
+
+padding column vs div within- makes border full length
+
+a lot of devs may do mobile 1st*NOTE - 
+
+<!-- ###REVIEW - Checkpoint -->
+  <!-- @media at bottom of screen -->
+    media query!!!!! changing borders on left to borders above/below for mobile
+    *bootstrap breakpoints: this size screen and up is when class will apply
+    
+    use exact px count for media queries
+@media (screen max-width:768) {
+  <!-- any rules we add int he media rule, will occur when the screen is below this size,  -->
+  .nav-border{
+    border-left: none;
+    border-right: none;
+  <!-- (above is previously named class) -->
+    border-top: 3 px solid black;
+    border-bottom: 3 px solid black;
+  }
+}
+min and max width!!!! if you use width only, it can cause issues
+
+    in media rules, only specify what CHANGES
+
+  images> gives minimum height instead of height; 
+
+#NOTE - position: absolute; position: relative;
+  position relative doesn't change until you adjust top/bottom, left/right
+  position absolute INSIDE of column rather than to entire page, add position relative to PARENT
+  Relative
+    Absolute
+<!-- example -->
+selector{
+  position: absolute;
+  top: 35%
+  bottom: 80%;
+}
+
+#NOTE - windows+v clipboard
+
+FORMATTER: alt shift f
