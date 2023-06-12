@@ -1,11 +1,13 @@
 # Intro to JavaScript
 01. Which keywords are used to declare a variable in JavaScript?
 
-    > | ANSWER HERE |
+    > Var, let, and const are all used to declare variables in JavaScript. However, var is no longer best practice- let can declare a variable but only within its own scope. Let is also hoisted to the top, so you must declare the variable before you can use it, and variables can be updated but not re-defined with let. Const is similar to let as it is also block scoped, but const means 'constant' so it cannot be updated or redeclared, but the VALUE itself can change.
+
+    *Block is everything inside of curly braces
 
 02. What is the definition of a function?
 
-    > | ANSWER HERE |
+    > A function is a block of code in JS that performs a particular task, it must be called (invoked) for it to perform those tasks. Functions always return a value.
 
 03. What are the `SOLID` principles?
 
