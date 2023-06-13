@@ -262,3 +262,146 @@ if all functions have to do inner text/ document get element
 you can add to 'selectFood' reusable function
 
 DOM document object model js changing html
+
+**Section Arrays**
+let cats = [
+  {
+    name: 'Gopher',
+    age: 2,
+    hasTail: true,
+    favoriteToys: ['mouse']
+  },
+  {
+    name: 'Iron Man',
+    age: 3,
+    hasTail: true,
+    favoriteToys: ['shoe lace', 'tube', 'laser pointer']
+  },
+  {
+    name: 'Frankie',
+    age: 5,
+    hasTail: true,
+    favoriteToys: ['cheese', 'laser pointer']
+  },
+]
+
+**#!SECTION for loops**
+// for loop to work through array
+// run once and pull out gopher, if i is less than one, and increment by 1, or i +=3 jumps ahead
+
+for (let i = 0; i < 1; i++) {
+
+}
+
+// middle portion is the condition, third (i++) is the initializer
+
+console.log('cats length', cats.length)
+//length is the actual length (3), although it goes 0, 1, 2
+//less than the array.length because the length will always be one more than the last index of the array
+
+**NOTE - for (let i = 0; i < cats.length; i++) {
+  let cat = cats[i]
+  console.log('🐈', cat)
+}
+
+**NOTE - //to grab just the name:
+for (let i = 0; i < cats.length; i++) {
+  let cat = cats[i]
+  console.log('🐈', cat.name)
+}
+**NOTE - //this is a function called forEach
+// => is called a Landa
+//make sure semicolon is removed after console.log();
+cats.forEach(cat => console.log('🐈 for each!', cat))
+
+
+**NOTE - //if cats name is gopher set foundCat to that value
+//Finds: returns FIRST thing that it finds and then it stops running function
+let foundCat = cats.find(cat => cat.name == 'Gopher')
+
+  console.log('🐈 found cat: ', foundCat);
+
+Find is good for the UNIQUE property, not for anything shared.
+
+things in array will have an id which are completely unique
+
+**NOTE - filter function to target cats with tails true only
+//makes brand new array with hasTail == true only
+  let filteredCats = cats.filter(cat => cat.hasTail == true)
+  console.log('filter', filteredCats)
+//didn't replace or destory former array, but made copy with only tails
+
+//to target cats older than four and less than 10
+  let filteredCats = cats.filter(cat => cat.age > 4 && cat.age < 10)
+  console.log('filter', filteredCats)
+
+**NOTE - sort
+//sorted by age
+//sort takes in comparing function, compares 2 things in array at a time
+//subtracts cat 1 and cat 2 age, whichever is 0/-1/-2
+let sortedCats = cats.sort((cat1, cat2) => cat1.age - cat2.age)
+
+  console.log('sort', sortedCats)
+
+for and forEach do the same thing
+
+  console.group() at top of screen
+  console.groupEnd() collapses every console between
+
+**NOTE - another array method - map
+  let numbers = [1, 2, 3, 4]
+
+run thru array and change value
+.map
+(for each number in this array, id like to multiply by two)
+
+  let changedNumbers = numbers.map(numbers => number*2)
+
+  console.log('changed', changedNumbers);
+
+  output: 2, 4, 6, 8
+
+Primitive types: numbers, booleans
+
+Reference types: arrays, objects
+
+find something random in array:
+    function makeAMurderer() {
+      let randomNumber = Math.random()
+      console.log('random', randomNumber);
+    }
+find something random in array:
+    function makeAMurderer() {
+      let randomNumber = Math.floor(Math.random() * 10)
+      console.log('random', randomNumber);
+    }
+//math.floor gives whole numbers
+find something random in array:
+    function makeAMurderer() {
+      let randomNumber = Math.floor(Math.random() * animals.length)
+      console.log('random', randomNumber);
+    }
+//accesses array
+    function makeAMurderer() {
+      let randomNumber = Math.floor(Math.random() * animals.length)
+      console.log('random number', randomNumber);
+      let randomAnimal = animals[randomNumber]
+      console.log('random animal', randomAnimal);
+    }
+//single = reassigns
+**NOTE - math equation to remember below
+    function makeAMurderer() {
+      let randomNumber = Math.floor(Math.random() * animals.length)
+      console.log('random number', randomNumber);
+      let randomAnimal = animals[randomNumber]
+      console.log('random animal', randomAnimal);
+      randomAnimal.guilty = true
+    }
+//accesses array
+    makeAMurderer()
+
+button onclick to access js; draw; write filter array 
+
+bang operator: !animal.mammal means mammal property is false
+
+filter method animal.diet.includes('') to access inner array
