@@ -405,3 +405,5 @@ button onclick to access js; draw; write filter array
 bang operator: !animal.mammal means mammal property is false
 
 filter method animal.diet.includes('') to access inner array
+
+<!-- 6/14/23 Notes -->
