@@ -11,7 +11,15 @@
 
 03. What are the `SOLID` principles?
 
-    > | ANSWER HERE |
+    > -Single responsibility principle- like a function only having ONE responsibility, and writing separate code/separate function for other responsibilities.
+
+    -Open closed principle- open for extension (adding to) without breaking code, but closed for modification- not making changes to functionality
+
+    -Liskov substitution principle- a subclass should override parent class methods without breaking functionality
+    
+    -Interface segregation principle- no code should be forced to rely on unused methods
+
+    -Dependency inversion principle- high level principles should rely on abstractions rather than concrete implementations
 
 04. Given this array: How could you remove the `pineapple`?
 
@@ -38,7 +46,7 @@
     }
     ```
 
-    > | ANSWER HERE |
+    > you.friends.push(them), them.friends.push(you)
 
 06. Give an example of a JavaScript `Conditional`:
 
@@ -59,7 +67,8 @@
 
 09. What is the difference between a `primitive` value and a `reference` value?
 
-    > | ANSWER HERE |
+    > A primitive value is basically black or white- a boolean, a number, null, undefined. They have a 'fixed size' in memory
+    A reference value is an object, array, or function
 
 10. Demonstrate a loop that prints the numbers between -100 and 100?
 
