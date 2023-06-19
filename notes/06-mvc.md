@@ -180,3 +180,7 @@ new Class //not export
   playersService(//hit tab).increasePlayerScore()   *REVIEW - ((hold ctrl + ., ctrl + click takes to player svc))
     const players = AppState.players
   }
+
+
+your controller gets registered in router
+first object w/path nothing
