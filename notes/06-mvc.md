@@ -112,7 +112,71 @@ Constructor- when new home-controller, it runs code inside constructor; similar 
   15. want to add image? add another parameter in parens! constructor (name, imageUrl) {this.imgUrl = imageUrl}
   //build out constructors/data in AppState
   new Player('Jeremy', 'url goes here')
-  16. from PlayersCtonroller.js console.log(AppState.plaers)
+  16. from PlayersCtonroller.js console.log(AppState.players)
   <!-- new Player('Jeremy') -->
+  17. Show players on page load- ABOVE PlayerControllers.js constructor- function _drawPlayers(){}  <--underscore for functions that are PRIVATE. console.log(), call _drawPlayers() under constructor. ONLY runs once >
+  18. Each player class you can store methods/functions from appstate. under player.js
+  //getters must return a value
+  //getters do not take in any parameters
+  get PlayerDetails(){
+    let details = `Hello, my name is${this.name} and my score is ${this.score}`
+    return details
+    
+    return 
+  }
 
+  PlayersController.js- function drawPLayers(){
+    let players = AppState.players
+
+    console.log(players[0].PlayerDetails)
+  }
   this// property on the same object
+  19. Player.js
+  get PlayerCardTemplate(){
+    return /*html*/`
+    *paste in template from html here* 
+    `
+  }
+  20. PlayerController.js
+  utility functions under utils folder- within _drawPlayers function
+  setHTML('players', players[0].PlayerDetails)
+  21. Put ID in row in html 'players'
+
+function _drawPlayers(){
+  let players = 
+  let template = ''
+  players.forEach(player => template += PlayerCardTemplate)
+  setHTML('players', players[0].PlayerCardTemplate + players[1].PlayerCardTemplate)
+}
+22. css- assets/ style/ style.css
+.player-img{
+  max-height: 30vh;
+}
+add class to the right js (player.js)
+**REVIEW - 
+23. PlayersService.js in service file
+new Class //not export
+  class PlayersService(){
+  //NOTE - services do not generally have a constructor
+  }
+
+  export const playersService = new PlayersService()
+  //EVERY SERVICE WILL LOOK LIKE THIS**REVIEW - 
+
+  //NOTE - SINGLETON
+
+  -------------------------
+
+  class PlayersService(){
+
+  }
+
+  export const playersService = new PlayersService()
+  24. 
+  button onclick="app.PlayersController.increasePlayerScore()"
+//inside export   -- PlayersController:
+  increasePlayerScore(){
+    console.log('button clicked');
+  playersService(//hit tab).increasePlayerScore()   *REVIEW - ((hold ctrl + ., ctrl + click takes to player svc))
+    const players = AppState.players
+  }
