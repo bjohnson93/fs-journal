@@ -209,3 +209,161 @@ const otherHouse = new House()
 
 
 **WHEN DEFINING A CLASS YOU WANT TO USE AN UPPERCASE CHARACTER** and it is singular
+
+
+6/20/23 Notes
+
+GOALS
+-click dispense
+-finds random gotchamon
+-saves to local storage
+CTRL P to go thru files
+
+I. 
+Start with Coins/Button
+
+1. 
+AppState - data store in between yellow curly braces (coins - 0) like top of js
+
+2. 
+HTML- make rows/sections for structure of where things go on page
+
+3. 
+Controller- 1st export, export class, name class what file is.
+  constuctor() in curly braces followed by more {put your console log here}
+  *Go to router, change controller accordingly (CoinsController), and import
+button method in Controller INSIDE export, onclick goes from controller to svc
+
+4. 
+Service- 
+  class CoinsService{}  <--at top>
+  export coinsService = new CoinsService()  <--at bottom>
+
+5. 
+Go back to Controller and under button addCoin() oput in coinsService.addCoin()
+
+6. 
+Service
+  under class> addCoin()
+    { 
+      Appstate.coins++
+      log ('did coins go up', Appstate.coins)
+      }
+
+Next: update HTML!- draw # to page
+Controller > above export/outside of CoinsController (private from user)
+  function _drawCoins(){
+
+  }
+
+  6a. html needs ID! go set ID first
+  6b. setText in html- setText(id, text)
+      function _drawCoins(){
+        setText('coinsCount', AppState.coins)
+      }
+
+7. Invoke Draw > Controller> addCoin function- call drawCoins()
+
+8. Controller:
+    function _drawCoins(){
+        let stringOfCoins = ''
+
+        for(let i = 0; i < AppState.coins; i++){
+          stringOfCoins += '🪙'
+        }
+
+        setText('coinsCount', stringOfCoins //AppState.coins)
+      }
+
+
+II. 
+Gachamons
+
+  Need model for Gachamon   
+Gachamon.js (new file in model.js)
+1. Start with model for Gachamon- go to model and make new Gachamon.js file
+
+  export class Gachamon {
+
+    //add properties to this class//
+
+    constructor(data){
+      this.name = data.name
+      this.rarity = data.rarity
+      this.emoji = data.emoji
+    }
+
+
+  }
+
+2. Go to AppState
+  gachamons = [
+    new Gachamon({name: 'Mikey', emoji: '', rarity: 'ultra-rare'})
+    //make sure gachamon.js model is imported
+  ]
+
+3. Gachamon.js (model)
+  debugger above constructor
+
+4. AppState- make additional Gachamon
+
+5. log Gachamons from AppState, from Controller > create Controller > GachamonsController.js
+    5a. export class GachamonsController.js{
+
+      constructor(){
+        console.log('look at these dues', AppState.gachamons)
+      }
+    }
+
+    oops! 
+6. Register in router- pass through ARRAY of controller types
+      Intellisense imports GachamonsController
+
+7. Draw Gachamons to page
+  Gachamon.js //template so it draws html out
+    get GachamonSmallTemplate(){
+      return `
+      //html goes here//
+      `
+    }
+
+8. Make template in HTML, then add to Gachamon.js page
+
+9. Go to GachamonsController, private funct _drawGachamons(){}
+getters don't need invoked (from Gachamon.js which is the model)
+
+10. id on html, back to controller, set html > id, template
+
+11. Invoke draw in constructor
+
+III. 
+Details on Gachamon
+
+1. click on html > run code (onclick)
+Gachamon.js, add onclick to div. app.GachamonsController.showcaseGachamon()
+
+2. write showcaseGachamon(){} in GachamonsController IN constructor, log 1st
+  back to Gachamons.js and to app.GachamonsController.showcaseGachamon('${this.name})
+  add showcaseGachamon(gachamonName){
+    console.log('do i work?', gachamonName)
+    const gachamons = Appstate.gachamons
+
+    const foundGachamon = gachamons.find(g => g.name == gachamonName)
+
+    log('', foundGachamon)
+  }
+
+3. change data in AppState thru SERVICE, see consts above
+
+4. controller- gachamonName in showcase()
+
+-----
+
+register listener in coins controller / constructor
+  AppState.on('coins', _drawCoins)
+  remove _drawCoins() from addCoin, bc it says if coins changes, update page with drawCoins
+
+*REVIEW - 
+//triggers our 'listener' (on)
+  GService:
+    AppState.emit('myGachamons')
