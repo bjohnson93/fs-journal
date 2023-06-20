@@ -68,7 +68,7 @@ Constructor- when new home-controller, it runs code inside constructor; similar 
 *new class within JS is capitalized
 
 3. PlayersController.js new folder in controllers
-  1. controller needs to be user by other parts in code (export), 
+  1. controller needs to be used by other parts in code (export), 
   2. data type class; export class PlayersController {}
   3. console.log controllers name, reg w/app.js: PlayersController {constructor() {
     console.log('Players controller loaded')
@@ -184,3 +184,28 @@ new Class //not export
 
 your controller gets registered in router
 first object w/path nothing
+
+*NOTE - a method is a function() within a class
+*NOTE - constructor is a very specifically named method than runs inside of a class. 
+class House {
+
+constructor(bedrooms, bathrooms, sqFootage){
+  this.bedrooms = bedrooms
+  this.bathrooms = bathrooms
+  this.sqFootage = sqFootage
+  }
+
+}
+
+const myHouse = new House(4, 3, 2500)
+
+when you console.log()
+myHouse
+House {bedrooms: 4, bathrooms: 3, sqFootage: 2500}
+
+'this' takes place of 'myHouse and otherHouse'
+const myHouse = new House()
+const otherHouse = new House()
+
+
+**WHEN DEFINING A CLASS YOU WANT TO USE AN UPPERCASE CHARACTER** and it is singular
