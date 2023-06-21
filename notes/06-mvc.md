@@ -367,3 +367,41 @@ register listener in coins controller / constructor
 //triggers our 'listener' (on)
   GService:
     AppState.emit('myGachamons')
+
+
+
+------------------------------------
+06/21/23
+
+From router: views are basically different pages
+router is an array of objects
+
+a href=" #/about
+  says take whatever they have in url, add this to end
+
+your view page from router holds html
+
+make car Model
+  constructor take in data
+
+generateId()
+
+move html to car.js/carview.js
+
+new Date()
+  encapsulates date and time incl milliseconds
+appstate doesn't include list date or id as it isn't in form
+
+log from controller
+
+Date.prototype.toLocaleString()// this.listingDate.toLocaleString()
+
+Bootstrap collapse to hide form
+
+ TERNARY OPERATOR
+
+.on, emit
+
+remove from array with splice
+
+update local storage saveCars()
