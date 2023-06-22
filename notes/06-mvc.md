@@ -405,3 +405,41 @@ Bootstrap collapse to hide form
 remove from array with splice
 
 update local storage saveCars()
+
+6/22/23 Notes
+
+model is where this.info is w/data as parameter
+
+ORDER: index, router, casescontroller, casesservice, appstate, case.js
+  close the ones you're not working on
+  draws written in controller
+  getters are in case.js
+
+id's set up in view/router
+
+business logic- modify/rearrange data-> service
+controller- what am i supposed to draw based on data that is there
+
+map creates copy of array with mods
+
+const _badWords = []
+
+get computedRedactedReport(){
+
+let arr = this.report.split(' ')
+
+let mapped = arr.map(word => {
+  if(_badWords.includes(word.toLowerCase())){        //includes returns true or false
+    return '___'
+  }
+  return word
+  })
+  return mapped.join(' ') //returns to computedRedactedReport
+  }
+
+
+  ... spread operator- takes array and takes bracket off of it
+
+onblur / onfocus
+
+to blur something, you have to 'focus' something else

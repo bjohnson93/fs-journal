@@ -18,5 +18,9 @@
     "titleBar.inactiveBackground": "#2be0e799",
     "titleBar.inactiveForeground": "#15202b99"
   },
-  "peacock.color": "#2be0e7"
+  "peacock.color": "#2be0e7",
+  "cSpell.words": [
+    "casescontroller",
+    "casesservice"
+  ]
 }
