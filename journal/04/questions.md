@@ -25,7 +25,7 @@
 
 07. What does the `API` acronym stand for?
 
-  > | ANSWER HERE |
+  > | Application Programming Interface. How we pull data out from server, getting data to user's computer, with limited info that is appropriate for user. API does the checks to make bring user requests to server, then makes sure given info is allowed back to user. (Think waiter in restaurant for customer(user)/chef(server)) |
 
 08. What must you do in order to `await` a promise inside of a function?
 

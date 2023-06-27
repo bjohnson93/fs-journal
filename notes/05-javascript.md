@@ -310,7 +310,7 @@ for (let i = 0; i < cats.length; i++) {
   console.log('🐈', cat.name)
 }
 **NOTE - //this is a function called forEach
-// => is called a Landa
+// => is called a Lamda
 //make sure semicolon is removed after console.log();
 cats.forEach(cat => console.log('🐈 for each!', cat))
 
