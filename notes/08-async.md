@@ -284,3 +284,148 @@ MVC Auth Auth-0
 63. Everything in router view copy/comment out/ go to view folder create carsView export const CarsView = /html/ `paste in here`
 
 64. Change view to CarsView in router!
+
+///////////////////////////////!SECTION
+
+6/28/23
+
+1. env.js! use sandbox to fill info. use bcw sandbox for base url
+
+2. Request to dnd api- this will go in axios; create another instance of axios to talk to dnd. leave first export const api. export const dndApi = axios.create({
+  baseURL: '//put base here',
+  timeout: 8000
+})
+
+3. create controller/constructor/log > router- put in controller > html- rid of auth template
+
+4. controller: async getSpells() {
+  try{
+    await spellsService.getSpells()
+  }
+  catch(error)
+  console.error(error)
+  Pop.error(error.message)
+}
+
+5. SpellsService.js;  async getSpells()
+ {const res = await dndApi.get('api/spells')
+ log res.data
+ }
+
+6. controller this.getSpells on page load
+
+7. Store pojos in appstate:  spells = [], // @type {Object[]}
+
+8. Service: getSpells: appstate.spells = res.data.results
+
+9. draw to string in controller: let spells = appstate.spells; let template = ''; 
+spells.forEach(spell => {; template += `<li class="mb-2 selectable" role="button">Spell</li>`}); setHTML('spellList', template)
+
+10. index: .container-fluid, row, col-3 ul id=spellList; and col-9
+
+11. spells controller/constructor/ AppState.on('spells' drawfunct)'
+
+12. ${spells.name} in li tag
+
+13. grab index from pojo and get to service to make get request
+      a. onclick="app.SpellsController.getSpellDetails('${spell.index}')"
+
+14. asnyc getSpellDetails(spellIndex){try/await spellService.getSpellDetails(spellIndex)/catch, error handling}
+
+15. svc above function: async; const res = await dndApi.get(`api/spells/${spellIndex}`); log res.data!; 
+
+16. copy object from log and make spell model! export/constructor(data); let spellData = paste
+
+17. save to sandbox api: change desc to description//*FIXME - chnage [] to string this.description = data.desc
+Just store required things from sandbox
+this.damage = data.damage ? data.damage.damage_type.name : 'does no damage'
+  *copy property path and paste
+
+18. appstate activeSpell = null @type import spell || null
+
+19. const newSpell = new Spell(res.data); AppState.activeSpell = newSpell
+
+20. controller: funct drawActive(){let spell = AppState.activeSpell; log(spell, 'active spell')} call w/AppState.on('activeSpell', drawActiveSpell)
+
+21. target ul spelllist in style css ul{max-height: 85vh; overflow-y auto;}
+
+22. html template: move tos pell model and make get details template function w/string interpolation
+
+23. controll: drawactivespelll sethtml spelldetails spell.detailstemplate
+
+24. button on spell details to saev to SANDBOX API   DETAILS TEMPLATE () button: save to Sandbox
+post request! onclick="app.SandboxSpellsController.createSpell()" //only one active spell in appstate at a time
+
+25. createSpell(){constructor(){}; async createSpell(){try/await/sandboxSpellService.createSpell()  /catch/error}}
+
+26. sandboxservice createSpell() { const res = await api.post('api/spells'); log(res.data)}
+
+27. controller in router!
+
+28. no payload/ nothing was sent to api to become spell there; sandboxservice createSpell() {//const spellToSentToApi = AppState.activeSpell;  const res = await api.post('api/spells',// spellToSendToApi); log(res.data)}
+
+29. array of strings into a string: .join: ['sup', 'yall'] 'sup,yall'  .jion(' ') 'sup yall'  // ('\n') <--puts enter in new line character>
+
+30. another page to see our spells> index.html navbar- make another page My Spells; router: add another path, also sandbox controller
+
+31. take whole container fluid from index and put into new view DNDspellsview export consts dndspells view = /*html*/ `paste container`
+
+32. update view in router
+
+33. sandbox control async getMySpells(){try/await sandboxservice.getMySpells()catch/error}
+
+34. service get my spells{} const res = await api.get('api/spells'); log "res.data ; 
+//NEED logged into sandbox! 
+
+35. 401: add listener to controller appstate.on('account', this.getmypells)
+
+36. change to spell class; AppState > mySpells = [] // dont forget import
+
+37. sandbox service: get my spells/ const builtSpells = res.data.map(spellPojo => new Spell(spellPojo))
+AppState.mySpells = builtSpells (notice map didnt have results!)
+
+38. model descript// this.description = data.description || data.desc.join('\n')
+
+40. typeof()
+
+
+
+Checkpoint Hint: 
+
+  change my spells template in view to be actual button/ copy everything in router and copy, make another view (sandboxspellsview)/ they dont draw when you come BACK to page. sscontroller: when loaded, draw my spells in constructors
+
+1. 
+  ***property that we can save: 'prepared' property: go to model/spell.js: top: this.prepared = data.prepared || false; now-> get spells be able to edit spell/flip bool to true; CHECKBOX! spelllistitemtemplate: input ckbox, checked attribute chooses whether on page load or not. paste in template. checkbox -> put request to api -> spell now prepared: input onchange="app.SandboxSpellsController.toggleSpellPreparation('${this.id}')"
+
+  controller: async toggleSpellPreparation(spellId){try/await sandboxSpellsService.toggleSpellPreparation(spellId)/catch/error}--->
+  const foundSpellIndex = AppState.mySpells.findIndex(spell => spell.id == spellId)
+
+  const foundSpell = AppState.mySpells[foundSpellIndex]
+  if(!foundSpell) {
+    throw new Error ("INVALID ID")
+  }
+
+  const res = await api.put(`api/spells/${spellId}`, {prepared: !foundSpell.prepared}); 
+  log'edited spell',res.data; 
+
+  //old one out of appstate and get new back
+
+  //foundSpell.prepared = res.data.prepared
+
+const updatedSpell = new Spell(res.data)
+
+AppState.mySpells.splice(foundSpellIndex, 1, updatedSpell)
+
+
+html doesn't have checked attribute;get myspelllistitemtemplate() input ${this.prepared ? 'checked' : ' ' }
+
+
+2. count how many spells and how many are prepared
+
+  view: sandboxspells: insert <p><span id="preparedSpellCount">0</span> / <span id="spellCount">0</span></p> 
+ssscontroller
+drawMySpells/
+const preparedSpells = mySpells.filter(spell => spell.prepared).length
+   setText('spellCount', mySpells.length); setText('preparedSpellCount', preparedSpells.length)
+
+ss service: AppState.emit('mySpells')
