@@ -155,7 +155,7 @@ MVC Auth Auth-0
 
 3. Axios service is already set up- lots of code in there. env.js is where the url goes now.
 
-4. C in crud- the car objects w/make, model, year, etc. BCW sandbox (check slack for url) base url before api/jobs
+4. CRUD Create- the car objects w/make, model, year, etc. BCW sandbox (check slack for url) base url before api/jobs
 
 5. Don't change const 'api' in the axios service
 
@@ -163,7 +163,7 @@ MVC Auth Auth-0
 
 7. Build controller, see if request to api successful, console log.
 
-8. Router- h1 welcome to Gregslist, and add the controller in another object in router (keep other controllers). Change url to cars to test log.
+8. Router- h1 welcome to Gregslist, and add the controller in another object in router (keep other controllers). Change path to cars to test log.
 
 9. Add cars page to nav bar in html
 
@@ -191,7 +191,7 @@ MVC Auth Auth-0
 17. *NOTE - Turn pojos into car model!!! CarsService: Map. async getCars() { //; //; const builtCars =  res.data.map(carPojo => new Car(carPojo))  //store in appstate// AppState.cars = builtCars} *you didn't need to drill into anything in console. console log was just an array.
     always log res.data when getting from axios
 
-18. CarsController- set up listener. AppState.on('cars', _drawCars()), then create _drawCars function above. let cars=AppState.cars; log ('here are cars', cars)
+18. CarsController- set up listener. AppState.on('cars', _drawCars), then create _drawCars function above. let cars=AppState.cars; log ('here are cars', cars)
 
 19. index.html: routerview: .container-fluid > .row > .col-12 > h1 'cars' > .row, id=whipsList >
 
