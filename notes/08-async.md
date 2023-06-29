@@ -429,3 +429,84 @@ const preparedSpells = mySpells.filter(spell => spell.prepared).length
    setText('spellCount', mySpells.length); setText('preparedSpellCount', preparedSpells.length)
 
 ss service: AppState.emit('mySpells')
+
+
+6/29/23
+
+
+
+1. env copy/paste ; baseurl NO api in url
+
+2. api- add new api and give name, give new base url
+  - generate api key? attach in as params{}
+
+3. no view/ use index html
+
+4. async getrandom first
+
+5. copy object and put in model for data/
+
+6.  drill into object- data.urls.regular/ or object/array- data.urls.regular['data-whatever']; dat new Date(data.created_at)
+
+7. appstate/ picture/null
+
+8. no map in svc bc it is an object!
+
+9. draw() const picture = AppState.picture; const htmlBody = document.body; #REVIEW - CHECKPOINT ✔️ htmlBody.style.backgroundImage = `url(${picture.imgUrl})`; 
+  a. style css body{background-size: cover; background-position: center;}
+
+10. index.html: in routerview: cf/row/col10mauto/div-border-color:#000000; of obj/h1-date/h2-desc/h3-altdesc/div-dflexjustifycontentcenter/imgaltname/h4-authname/
+
+11. main/display:flex;flexdirection:column;justifycontent:center;
+
+12. css: textshadow{color:whitesmoke;text-shadow:1px 1px 4px black} offset offset blue color; text-shadow darkcard/ css: .darkcard/padding1em;
+
+13. pseudo .darkcard:hover{}
+
+14. built utility class for hide until hover/put hidden info in div, on-hover
+
+15. navbar search: div/form/input-required,type-text, name="search"; form/onsubmit
+
+16. dummy text- move into class obj/pic model/get detailstemplate; button/button or button/submit for form
+
+17. async getrandompicturebyquery(event) try/log event.preventdefault/let form = event.target/get values with: let formData = getFormData(form)/log formData(make sure name on input!!!!)/   service.picbyqueryfunct(formData)/catch; svc: func: async/await/ const res = await unsandboxapi.get(`api/images/random?query=${formData}`)WRONG, passes data as query; instead: (`api/images/random?query=${formData.search}`);/const newPicture = new Picture(res.data)/AppState.picture = newPicture
+
+18. see more of pic: pic model/ button, wrap in a tag, href${this.imgUrl} target="_blank"
+
+19. save pic to sandbox api: button next to camera button of 💖// app.sandboxcontrol.createpic()//no id//title tag gives better user experience
+
+20. async creatPic/try/await.sesrvice.creatpic()/catch
+  svc: async creatPic(){const picture = AppState.picture const res = await api(axios instance).post('api/apods', picture) <--sandbox api, sending up picture>;/ log'created pic', res.data}
+
+21. sandbox controller, hook to router, sandbox service
+
+22. copy obect from boise codeworks api> go to pic model- id needs added. this.date = data.date ? new Date(data.date) : new Date(data.created_at)   //this is saying if there isnt a data.date, use the date for sandbox and if not use the other one// this.id = data._id || ''
+
+23. getquest to sandbox to get savedpics/ sandbox control async getmypics/try/await sandboxserv.getmypics/catch
+
+24. svc: asnyc await get my pics/const res = await api.get('api/apods');/log'gotmypic s',res.data/ INVOKE this.getmypics (controller: make sure there is listener on account in appstate, this.getmypics)
+
+25. Need empty array in appstate to store my pics! mypics=[], same import as pic/null; map over array! svc: const newPics = res.data.map(picturePojo => new Picture(picturePojo)); AppState.myPictures = newPictures
+
+26. controller: constructure sppstate.on'mypics',drawmypics / _drawmypics{const pics = appstate.mypics/logpics/
+}
+
+27. OffCanvas: indexhtml/ .col12 in offcanv/ img-class-imgfluid-roiunded-elevation4/ add id, remove div and put in picture model
+
+28. model/ get listetemplate/ return ``
+
+29. controller drawmypics/ template = ''/ pics.foreach/pic->temp=>pic.listemp/ sethtml/('mypics',temp)
+
+30. sandbox service / create pic/ const newpic = new Picture (res.data)/ appstate.mypics.push(newpic)/ appstate.emit'mypics'
+
+31. picture model, make img selectable role-button, onclick app.sandboxpicscontrol.setactivepic('${picid}')
+
+32. sandbox control setatctivepic(picid){sandboxserv.setactivepic(picid)}  //already in appstate so no async needed
+
+34. setactivepic(id)/const foundpicture = appstate.mypics.find(pic => pic.id === pictureid) / if(!foundpic){return} / appstate.picture = foundpicture
+
+35. *REVIEW - CHECKPOINT; delete: list template/button to delete w/onclick/ controller async delete(picid){try/await sandboxserv.deletepic()/catch}
+
+36. async/await delete in serv/ const res = await api.delete(`api/apods/${pictureId}`);/ log(deleted pic', res.data)      // make sure u want to delete in controller! in try/ const wantsToDelete = await Pop.confirm('') / if(!wantsToDelete){return}   svc= const picIndex = appstate.mypics.findindex(pic => pic.id == pictureId(used to delete from api)) if(picIndex == -1) {return OR throw new Error()} // appstate.mypics.splice(picindex, 1) appstate.emit('myPictures')
+
+23. bootstrap offcanvas;   
