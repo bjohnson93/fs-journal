@@ -510,3 +510,7 @@ ss service: AppState.emit('mySpells')
 36. async/await delete in serv/ const res = await api.delete(`api/apods/${pictureId}`);/ log(deleted pic', res.data)      // make sure u want to delete in controller! in try/ const wantsToDelete = await Pop.confirm('') / if(!wantsToDelete){return}   svc= const picIndex = appstate.mypics.findindex(pic => pic.id == pictureId(used to delete from api)) if(picIndex == -1) {return OR throw new Error()} // appstate.mypics.splice(picindex, 1) appstate.emit('myPictures')
 
 23. bootstrap offcanvas;   
+
+
+or statement on class model if gift isnt open
+store data on api, thats a post request
