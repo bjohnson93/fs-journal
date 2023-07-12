@@ -65,3 +65,141 @@ ONE SERVICE
 19. async createCat(req, res, next){try{const catData = req.body const cat = await catsService.createCat(catData)// res.send(catData)}/catch(error){next(error)}}
 
 20. catsService  createCat(catData) {catData.id = cats.length + 1; cats.push(catData); return catData}
+
+7/11/23 MongoDB
+
+-BCW Create, ExpressMVC, gregslistNode
+
+Open Workspace
+-client folder
+-server folder
+
+ THE LITTLE BELL IN VS CODE OPENS WORKPLACE SETTINGS
+1. Server: .env: 
+MongoDB Atlas page to grab connection string > connect btn > drivers > copy connection string, paste into .env; 
+replace <password><Mf61UfRB5E4aGXOf > with mongoDB password, must be url safe!!!
+port doesn't need filled in
+auth_domain=      *auth0- applications, my app, copy domain/ client id / audience is under apis
+auth_audience=
+auth_clientId=
+**never push this to github^^!!!** .gitignore file- says to not push node_modules and .env to github
+
+2. Client: env.js: domain, audience, client id
+
+3. Ctrl ~ to open command line IN VS CODE, make sure right directory. ls, cd into client folder, then run bcw serve/localhost 8080
+
+4. Debug to spin backend, start server
+
+5. sign into auth0 with whatever
+
+6. If connections are successful, slack .env and slack it to yourself!!!
+
+7. auth0 provides user management/users you can manage users
+
+8. mongodb collections/accounts gives account query results!
+
+**NOTE - Code defensively, always as if you're under attack, as if everyone is malicious or everyone is stupid
+
+9. Write our own Schema > server > model > car.js
+export const CarSchema = new Schema( (should auto import schema from mongoose)
+  {  
+    make: {type: String, required: true, maxlength: 50, minlength: 3},
+    model: {type: String, required: true, maxlength: 50, minlength: 1},
+    year: {type: Number, required: true, max: 2025, min: 1901},
+    color: {type: string, maxlength: 100},
+    ownedByGrandma: {type: Boolean, required: true, default: false},
+    miles: {type: Number, required: true, max: 400000, min: 1},
+    engineType: {type: String, enum: ['v8', 'v6', 'big-block'], default: 'medium'}
+    description: {type: String, maxlength: 500}
+},<--gives intellisense>{timestamps: true, toJSON: {virtuals: true}}
+) imgUrl is type string, no type url
+creatorId: {type: Schema.Types.ObjectId, required: true}
+
+10. db folder > DbContext.js , .env--> put title(gregslist) before ? in url in connection string, this saves it in mongo db in folder with that title
+DbContext under values and account; Cars = mongoose.model('Car', CarSchema)
+
+11. Server>Controllers> CarsController.js  export class CarsController extends BaseController { 
+  constructor(){
+    super('api/cars')
+    this.router
+    .get('', this.getCars)  //to test go to localhost 3000/api/cars
+  }
+}
+
+12. Postman! 
+
+13. CarsService, send over getCars; dbContext.Cars.find()  <--Mongoose find, not JS>
+
+14. Mongoose is like our translator! our js to binary script to mongodb
+
+15. Postman get request: 200 ok, [] turned info into array, this is good
+
+16. create controller/svc; postman post body raw json
+
+17. postman creatorId copy from mongo. Postman doesn't know we are logged in or not
+
+18. CarsController: constructor: .use(Auth0Provider.getAuthorizedUserInfo) <--you have to have bearer token for any requests to put/post/delete> PUT .use BETWEEN GET A POST!!!!!!
+
+19. local8080 open preview bearer token copy and paste in postman; Authorization type bearer token, paste in token slot
+
+20. #REVIEW - IMPORTANT: breakpoint on res.send on create car to make sure we have correct user
+const carData = req.body
+carData.creatorId = req.userInfo.id <----this makes sure the person making request matches the user/creatorId>
+
+21. public method in controller: .get('/:carId')
+
+22. .env has to be in server > server
+
+7/12/23
+
+UML CHART: (done by architect)
+Book App
+
+Book 
+  id               objectid
+  title            string(100)
+  description      string(500)
+  isHardCover      boolean
+one-to-many relationship; pages point to the one specific book
+    Page
+      id               objectid
+      chapterNumber    number
+      content          string(1000)
+      bookId           objectid
+
+*The page is technically a child of the book!
+
+    Account (author) (points to book)
+      id               objectid
+      name             string(100)
+      picture          string(500)
+      email            string(100)
+
+    BookAuthor (points to specific book and author)
+      id               objectid
+      bookId           objectid
+      authorId         objectid
+
+many to many keeps track of two different things (author id/book id)
+
+1. start with models or schema
+ 3 separate controllers- posts and gets
+ export const .Schema = new Schema({},{timestamps})
+
+2. Controller
+
+3. Spin up/environment variables in .env (project name), env.js front end
+
+4. cd .., cd into client folder, bcw serve/localhost8080;  debug to start server: if u get error read first line, make sure controller matches!!! (s)
+
+5. test get w/postman- new collection
+
+6. .use(Auth0Provider.getAuthorizedUserInfo), .post
+
+7. Private tab- sign in as something else.
+
+8. one to many: page; new model
+
+9. page model bookId: {ref: 'Book'}
+
+10. 
