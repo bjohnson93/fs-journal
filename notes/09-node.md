@@ -202,4 +202,79 @@ many to many keeps track of two different things (author id/book id)
 
 9. page model bookId: {ref: 'Book'}
 
-10. 
+Profiles are public information about a user, Accounts are private info about a user
+
+
+
+
+
+
+
+<!-- **!SECTION Hackathon Prep! 7/13/23 -->
+**Everyone will be working on ONE repository**
+
+1. express-mvc, will use client folder today a bit
+2. .env remember project name
+**For hackathon, we will use one person's .env/env.js auth credentials 
+3. open terminal, cd .., cd into client folder, bcw serve
+4. debug, start Server
+5. Start with model for highest most (schema), don't forget object of {timestamps: true, toJSON: {virtuals: true}}       ; reporterId: {type: Schema.Types.ObjectId, required: true, ref: 'Account'}
+6. Write dbContext birds
+7. write a controller! (extends BaseController), write get!
+8. write a service! getBirds const birds = await dbContext.Birds.find() ; return birds
+9. Postman, set up collection, folder, get birds, get your empty array
+10. Controller, post request to create birds
+11. createBird(r,r,n){const birdData = req.body; const bird= await birdsService.createBird(); res.send(bird)}
+12. Service: createBird(birdData){const bird = await dbContext.birds.create(birdData); return bird}
+13. Postman: add req create bird post req, add account id
+14. Controller: .use(Auth0Provider, getAuthorizedUserInfo)
+15. **review** controller create bird: const birdData = req.body; birdData.reporterId = req.userInfo.id
+16. localhost 8080 bearer token, set up as variable in postman, add into auth for create bird
+17. Controller get request: add query under try: const query = req.query; in postman locahost:3000/api/birds?size=small will query the small birds
+18. Service getbirds(query)/ const birds = await dbContext.Birds.find(query) <--also add getBirds(query) in controller to service>
+19. team member!!! push: create bird and get bird done on server, commit and sync changes
+20. Collaborators and teams, add people, add each - select person and Admin >> pending request to accept, she can accept and push changes to same repository
+21. DO NOT FORK!!!! Clone down- git clone, paste what u copied, cd into, code .
+22. **IMPORTANT** create a .env in the server folder, copy your partners/starters info into .env; env.js is already there in client
+23. terminal: npm i 
+24. start server, start client
+25. Open Client: Controller, router, comment out auth template
+26. async getBirds()try/catch await birdservice
+27. birds service getBirds. OPEN AXIOS AFTER api.get to 
+28. remember to call function in constructor 
+29. make your model
+30. appstate, store data []
+31. svc getbirds const gotbirds f= res.data.map(b=>new Bird(b)); store in appstate: Appstate.birds= gotBirds; log it
+32. draw birds! let birds = AppState.birds; let template = ''; birds.forEach(b => template += **create template**)
+33. index: primary viewport create card template, copy and comment out
+34. get template in model getBirdCardTemplate(){return `<html></html>`} string interpolation
+35. draw function in controller : let birds = AppState.birds; let template = ''; birds.forEach(b => template += b.BirdCardTemplate) setHtml('birds', template)  <----birds is from appstate>
+36. call function w/listener
+37. make card a selectable function: (template, onclick) setActiveBird; log to test!
+38. move to service (pass thru id): const foundBird = Appstate.birds.find(b +> b.id == birdId);  (make active bird null in appstate); Appstate.bird = foundBird
+39. data-bs-toggle from modal onto onclick in model, comment out button
+40. customize modal
+**image-fluid class
+41. move modal to template, keep outer html in index
+42. _drawActiveBird : let activeBird = AppState.bird setHtml('modal-guts', activeBird.activeBirdTemplate)
+43. listener for _drawActiveBird!!! appstate.on('bird', _drawActiveBird)
+44. make form! create 'Report Bird' button; uncomment and copy active bird form, paste for report bird form and customize accordingly  *id of input needs to match label for=""
+45. Enum: label for// select name=size' id='size'// options value="medium" <-->
+label: display:block in css will help
+46. put form into model (comment out in index); static get BirdForm(){paste here }
+47. write function to setBirdForm(){setHTML('modal-guts', Bird.BirdForm)}
+48. put this func on onclick on create button in html
+49. async createBird(event) event.preventDefault(); let form = event.target; let formData = getFormDate(form); log(formData, 'passed form data') check to make sure things correct: checkbox says on instead of true; 
+if(formData.canFly -- 'on'){formData.canFly = true} else { formData.canFly = false }
+NOW it is ready to go to service 😀
+50. async createBird(formData){
+  const res = await api.post('api/birds', formData)
+  log res.data
+  const newBird = new Bird(res.data)
+  AppState.birds.push(newBird)
+  emit('birds')
+}
+51. form.reset() in controller under await; bootstrap.Modal.getOrCreateInstance('#exampleModal').hide()
+52. commit changes
+53. Pull down changes: there will be a message down low on vs code with 1 and down arrow (one commit behind on github). click and it will pull down!
+54. many to many, add to bird schema
