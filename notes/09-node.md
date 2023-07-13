@@ -212,6 +212,7 @@ Profiles are public information about a user, Accounts are private info about a 
 
 <!-- **!SECTION Hackathon Prep! 7/13/23 -->
 **Everyone will be working on ONE repository**
+**Greglist good ref for crud methods**
 
 1. express-mvc, will use client folder today a bit
 2. .env remember project name
@@ -276,5 +277,125 @@ NOW it is ready to go to service 😀
 }
 51. form.reset() in controller under await; bootstrap.Modal.getOrCreateInstance('#exampleModal').hide()
 52. commit changes
-53. Pull down changes: there will be a message down low on vs code with 1 and down arrow (one commit behind on github). click and it will pull down!
+53. SWITCH TO SERVER: Pull down changes: there will be a message down low on vs code with 1 and down arrow (one commit behind on github). click and it will pull down!
 54. many to many, add to bird schema
+55. Bird model on SERVER: at bottom: 
+BirdSchema.virtual('reporter', {
+  localField: 'reporterId',
+  foreignField: '_id',
+  justOne: true,
+  ref: 'Account'
+})
+
+56. BirdsService: const birds = await dbContext.Birds.find(query).populate('reporter', 'name picture')
+57. Start Server
+58. cd client folder, bcw serve, localhost8080
+59. console array of birds: reporter is now populated
+60. bird service, createBird: after 1st line// await bird.populate('reporter', 'name picture')
+61. Bird watcher: BirdWatcher.js model/schema: export const birdWatchSchema = new schema// {timestamps: true, toJSON: {virtuals: true}}; put in birdId {type: Schema.Types.ObjectId, required: true, ref: 'Bird}, 
+watcherId: {type: Schema.Types.ObjectId, required: true, ref: 'Account'}
+62. BirdWatchersController.js super('api/birdWatchers').use(Auth0Provider.getAuthorizedUserInfo) .post('', this.createBirdWatcher)
+async createBirdWatcher(req, res, next) {
+  try{
+    const birdWatcherData = req.body
+
+    birdWatcherData.watcherId = req.userInfo.id
+
+    const birdWatcher = await birdWatchersService.createBirdWatcher(birdWatcherData)      <--svc created line 63>
+
+    return res.send(birdWatcher)
+  } catch (error) {
+    next(error)
+  }
+}
+
+63. async irdWatchersService(birdWatcherData) {
+  const birdWatcher = await dbContext.BirdWatchers.create(birdWatcherData)      //make BirdWatchers = mongoose.model('BirdWatcher', BirdWatcherSchema)
+  return birdWatcher
+}
+
+REQ.BODY AND USER INFO FOR CREATES!!!
+
+64. Postman post req: get bird id, put in auth, send off, success!!!
+65. You can see same bird twice, no no! BirdWatcherSchema: at bottom: BirdWatcherSchema.index({birdId: 1, watcherId: 1}, {unique: true})
+66. Won't reflect in postman: go to MongoDB: sign in, drop collection, respin, try in postman again
+67. Schema bottom: 
+return watcher info:
+BirdWatcherSchema.virtual('watcher', { 
+  localField: 'watcherId',
+  foreignField '_id',
+  justOne: true,
+  ref: 'Account'
+})
+BirdWatcherSchema.virtual('bird', { 
+  localField: 'birdId',
+  foreignField '_id',
+  justOne: true,
+  ref: 'Bird'
+})
+68. birdWatcherService: create: second line: await BirdWatcher.populate('bird')<--comment out later bc it's already in the view card>; await birdWatcher.populate('watcher', 'name picture')
+69. find birdWatcherByBirdId! (to show how many watchers) .get('/:birdId/birdWatchers', this.getBirdWatcherByBirdId)
+70. async getBirdWatcherByBirdId(req, res, next) {
+  try{
+
+    const birdId = req.params.birdId
+    const birdWatchers = await birdWatchersService.getBirdWatcherByBirdId(birdId)
+    return res.send()
+  } catch(error){
+    next(error)
+  }
+}
+71. birdWatchersService:
+async getBirdWatcherByBirdId(birdId){
+  <!-- const birdWatchers = await dbContext.BirdWatchers.find({birdId: birdId}) -->
+  const birdWatchers = await dbContext.BirdWatchers.find({birdId}) <--this works fine too>
+  return birdWatchers
+}
+72. populate (same func)// const birdWatchers = await dbContext.BirdWatchers.find({birdId}).populate('watcher', 'name picture')
+**HOW MANY PEEPS HAVE SEEN DIS BIRD**
+73. Bird Schema
+BirdSchema.virtual('birdWatcherCount', {
+  localField: '_id',  <--id of bird watcher itself>
+  foreignField 'birdId',
+  <!-- justOne: false, --> this line not needed
+  ref: 'BirdWatcher'   <--matches db context>
+  count: true
+})
+
+74. BirdsService: get birds .populate('reporter', 'name picture').populate('birdWatcherCount') <--this part new>
+RE-SPIN! get all bird in postman
+
+75. push/pull down/ respin server
+
+76. model/ Bird
+this.reporter = data.reporter
+this.birdWatcherCount = data.birdWatcherCount
+<!-- this.reportName = data.reporter.name -->
+
+77. Need to add img of reporter
+model, bird card temp: div to hold name of bird, birdWatcherCount; ${this.birdWatcherCount} img src="${this.reporter.picture}"
+
+78. Make: bird watchers controller: getBirdWatchersByActiveBird(){await birdWatchersService.getBirdWatchersByActiveBird}
+
+79. BirdWatchersService: getBirdWatchersByActiveBird(){const bird = AppState.bird; const res = await api.get(`api/birds/${bird.Id}/birdWatchers)} log(res.data)
+**go make it in Appstate: birdWatchers = []
+AppState.birdWatchers = res.data.map(p => new Profile(p.watcher))  <--passes down watcher object nested inside>
+log again AppState.birdWatchers
+
+80. BirdWatchersController function _drawBirdWatchers const birdWatchers = AppState.birdWatchers ; let template = '' //go to model and make get BWTemplate. make template in index, paste in model
+bird model, active template, id of bird watchers in div where u want to display them. title${this.name} <--easily displays on hover>
+
+81. BWSERVICE: becomeWatcher() {const bird = AppState.bird <--gives active bird id; const res = await api.post(''api/birdWatchers', {birdId : bird.id}) bird.birdWatcherCount++ ; AppState.birdWatchers.push(new Profile(res.data.watcher)) ; AppState.emit('birdWatchers'); AppState.emit('birds')>}
+
+
+// Add team members to Trello board, and you can basically 'fork' it, must make trello account, you can assign someone to task
+
+// Build Figma for site; fig-jam for uml
+
+
+
+
+
+
+
+control shift f
