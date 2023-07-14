@@ -13,7 +13,7 @@
 
 04. Which two `HTTP` request types include a body?
 
-  > | Post request and Get |
+  > | Post request and Put |
 
 05. In a/an _asynchronous_ coding model, when you call a function, it returns only when the action has finished and stops your program for the time the action takes. Likewise in a/an _synchronous_ coding model, multiple things are allowed to happen at one time. When you perform an action, your program continues to run.  Fill in the blanks.
 
@@ -29,7 +29,7 @@
 
 08. The ______ pipeline delivers information from the client while the ______ pipeline returns it. Fill in the blanks. 
 
-  > | Continuous Integration; Continuous Deployments |
+  > |Request, Response |
 
 09. Demonstrate the pattern that is used to include a request query with the client's `HTTP` request providing the property `tag` and the value `winter`.
 
